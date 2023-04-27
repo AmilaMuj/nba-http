@@ -1,0 +1,40 @@
+<body>
+    <p>NBA Games</p>
+    <select class="form-select" style="width: auto" [(ngModel)]="perPage" (ngModelChange)="onGetGamesResponse(currentPage, perPage)">
+        <option [ngValue]="15">15 items per page</option>
+        <option [ngValue]="20">20 items per page</option>
+        <option [ngValue]="25">25 items per page</option>
+    </select>
+    <pagination-controls (pageChange)="currentPage = $event; onGetGamesResponse(currentPage, perPage)"></pagination-controls>
+    <table>
+        <thead>
+            <tr>
+                <th>Game number</th>
+                <th>ID</th>
+                <th>Date</th>
+                <th>Home Team</th>
+                <th>Home Team Score</th>
+                <th>Visitor Team</th>
+                <th>Visitor Team Score</th>
+                <th>Postseason</th>
+                <th>Season</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody *ngIf="gamesResponse">
+            <tr *ngFor="let game of gamesResponse.data | paginate: { itemsPerPage: perPage, currentPage: currentPage, totalItems: totalGamesResponses}, let index = index">
+                <td>{{ (index + 1) + (currentPage - 1) * perPage }}</td>
+                <td>{{ game.id }}</td>
+                <td>{{ game.date | date }}</td>
+                <td>{{ game.home_team.name }}</td>
+                <td>{{ game.home_team_score }}</td>
+                <td>{{ game.visitor_team.name }}</td>
+                <td>{{ game.visitor_team_score }}</td>
+                <td>{{ game.postseason }}</td>
+                <td>{{ game.season }}</td>
+                <td>{{ game.status }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <pagination-controls (pageChange)="currentPage = $event; onGetGamesResponse(currentPage, perPage)"></pagination-controls>
+</body>

@@ -1,0 +1,29 @@
+<body>
+	<p>NBA Teams</p>
+    <pagination-controls (pageChange)="currentPage = $event; onGetTeamsResponse(currentPage)"></pagination-controls>
+	<table>
+		<thead>
+			<tr>
+				<th>Team number</th>
+				<th>Team id</th>
+				<th>Team Name</th>
+				<th>Abbreviation</th>
+				<th>City</th>
+				<th>Conference</th>
+				<th>Division</th>
+			</tr>
+		</thead>
+		<tbody *ngIf="teamsResponse">
+			<tr *ngFor="let team of teamsResponse.data | paginate: { itemsPerPage: 25, currentPage: currentPage, totalItems: totalTeamsResponses}, let index = index">
+                <td>{{ (index + 1) + (currentPage - 1) * perPage }}</td>
+				<td>{{ team.id }}</td>
+				<td>{{ team.full_name }}</td>
+				<td>{{ team.abbreviation }}</td>
+				<td>{{ team.city }}</td>
+				<td>{{ team.conference }}</td>
+				<td>{{ team.division }}</td>
+			</tr>
+		</tbody>
+	</table>
+	<pagination-controls (pageChange)="currentPage = $event; onGetTeamsResponse(currentPage)"></pagination-controls>
+</body>
